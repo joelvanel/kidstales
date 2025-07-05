@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KIDSTALES</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: #fffaf0;
+      color: #333;
+      margin: 0;
+    }
+    header {
+      background-color: #ffcccb;
+      text-align: center;
+      padding: 1rem;
+    }
+    header h1 {
+      margin-top: 0.5rem;
+      font-size: 3.5rem;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 1px 1px 3px #fff;
+      animation: aparecer 1.2s ease-in-out forwards;
+    }
+    nav {
+      background: #ffe082;
+      display: flex;
+      justify-content: center;
+      padding: 0.5rem;
+      gap: 2rem;
+    }
+    nav a {
+      text-decoration: none;
+      font-weight: bold;
+      color: #5e35b1;
+    }
+    .contenido {
+      padding: 2rem;
+    }
+    .seccion {
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .formulario label {
+      display: block;
+      margin-top: 1rem;
+      color: #00897b;
+    }
+    .formulario input,
+    .formulario textarea {
+      width: 100%;
+      padding: 0.7rem;
+      margin-top: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .formulario button {
+      background-color: #f06292;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+    .formulario button:hover {
+      background-color: #ec407a;
+    }
+    .cuentos-registrados {
+      margin-top: 2rem;
+    }
+    .cuento-item {
+      background: #fce4ec;
+      border-left: 5px solid #f06292;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 8px;
+    }
+    footer {
+      background-color: #ffcccb;
+      text-align: center;
+      padding: 1rem;
+      color: #555;
+    }
+    @keyframes aparecer {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .decoracion-personaje {
+      position: absolute;
+      width: 80px;
+      animation: flotar 3s ease-in-out infinite;
+    }
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body onload="cargarCuentos()" style="position: relative;">
+  <img src="https://cdn-icons-png.flaticon.com/512/2933/2933185.png" class="decoracion-personaje" style="top: 20px; left: 20px;">
+  <img src="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" class="decoracion-personaje" style="top: 20px; right: 20px;">
+  <header>
+    <h1>
+      <span style="color:#ff9800;">K</span><span style="color:#2196f3;">i</span><span style="color:#4caf50;">d</span><span style="color:#f44336;">s</span><span style="color:#9c27b0;">t</span><span style="color:#009688;">a</span><span style="color:#e91e63;">l</span><span style="color:#ff5722;">e</span><span style="color:#ffc107;">s</span>
+    </h1>
+    <p style="font-size: 1.2rem; text-align: center; color: #6a1b9a; margin-top: 0.5rem;">CUENTOS INFANTILES ORIGINALES</p>
+    <p style="font-size: 1rem; text-align: center; color: #5e35b1;">Donde la imaginación cobra vida y cada niño es autor de su historia</p>
+  </header>
+
+  <nav>
+    <a href="#registro">Registrar</a>
+    <a href="#sube-cuento">Agregar cuento</a>
+    <a href="#explora">Explora cuentos</a>
+    <a href="#sobre">Sobre Kidstales</a>
+  </nav>
+
+  <div class="contenido">
+    <div class="seccion" id="registro">
+      <h2>Registro de usuario</h2>
+      <form class="formulario" id="formRegistro">
+        <label for="usuario">Nombre del usuario:</label>
+        <input type="text" id="usuario" name="usuario" required />
+
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" name="correo" required />
+
+        <button type="submit">Registrar</button>
+      </form>
+    </div>
+
+    <div class="seccion" id="sube-cuento">
+      <h2>Agregar cuento</h2>
+      <form class="formulario" id="formCuento">
+        <label for="nombre">Nombre del niño o niña:</label>
+        <input type="text" id="nombre" name="nombre" required />
+
+        <label for="titulo">Título del cuento:</label>
+        <input type="text" id="titulo" name="titulo" required />
+
+        <label for="cuento">Escribe tu cuento:</label>
+        <textarea id="cuento" name="cuento" rows="6" required></textarea>
+
+        
+
+        <button type="submit">Enviar cuento</button>
+        <button type="button" onclick="verificarOriginalidad()">Verificar originalidad del cuento</button>
+        <p id="resultadoOriginalidad" style="margin-top: 0.5rem; font-weight: bold;"></p>
+      </form>
+
+      <div class="cuentos-registrados" id="cuentosRegistrados">
+        
+        <h3>Cuentos registrados:</h3>
+      </div>
+    </div>
+
+    <div class="seccion" id="explora">
+      <h2>Explora cuentos enviados</h2>
+      <p>¡Aquí podrás leer cuentos originales escritos por niños y niñas de todo el mundo!</p>
+      <p><i class="fas fa-book-reader"></i> Pronto habilitaremos filtros por edad, temas y autores.</p>
+    </div>
+
+    <div class="seccion" id="sobre">
+      <h2>¿Qué es Kidstales?</h2>
+      <p>Kidstales es una plataforma creativa y segura donde los niños pueden subir sus propios cuentos, fomentando la escritura, lectura y creatividad desde pequeños. Nuestro sistema verificará la originalidad del contenido y promoverá a los pequeños autores a través de marketing positivo y educativo.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Kidstales. Todos los derechos reservados. | Contacto: hola@kidstales.com</p>
+    <div style="margin-top: 1rem;">
+      <a href="#" style="margin: 0 10px; color: #6a1b9a;"><i class="fab fa-facebook fa-lg"></i></a>
+      <a href="#" style="margin: 0 10px; color: #039be5;"><i class="fab fa-twitter fa-lg"></i></a>
+      <a href="#" style="margin: 0 10px; color: #d81b60;"><i class="fab fa-instagram fa-lg"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    function mostrarCuento(cuento) {
+      const contenedor = document.getElementById('cuentosRegistrados');
+      const div = document.createElement('div');
+      div.className = 'cuento-item';
+      const originalidad = cuento.originalidad ? `<p><strong>Originalidad:</strong> ${cuento.originalidad}%</p>` : '';
+      div.innerHTML = `<strong>${cuento.titulo}</strong><br><div style='margin: 4px 0;'><span><strong>Originalidad:</strong> ${cuento.originalidad}%</span></div><br><strong>Autor:</strong> <em>${cuento.nombre}</em><p>${cuento.cuento}</p>`;
+      contenedor.appendChild(div);
+    }
+
+    function cargarCuentos() {
+  let cuentos = JSON.parse(localStorage.getItem('cuentos')) || [];
+  cuentos = cuentos.map(cuento => {
+    if (!cuento.originalidad) {
+      cuento.originalidad = Math.floor(Math.random() * 21) + 80;
+    }
+    return cuento;
+  });
+  localStorage.setItem('cuentos', JSON.stringify(cuentos));
+  cuentos.forEach(cuento => mostrarCuento(cuento));
+    }
+
+    function verificarOriginalidad() {
+      const porcentaje = Math.floor(Math.random() * 21) + 80;
+      const resultado = document.getElementById('resultadoOriginalidad');
+      resultado.textContent = `Originalidad estimada: ${porcentaje}%`;
+      resultado.dataset.valor = porcentaje;
+
+      if (porcentaje >= 95) {
+        resultado.style.color = '#2e7d32';
+      } else if (porcentaje >= 90) {
+        resultado.style.color = '#f9a825';
+      } else {
+        resultado.style.color = '#e53935';
+      }
+    }
+
+    function agregarCuento(event) {
+      event.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const titulo = document.getElementById('titulo').value;
+      const cuento = document.getElementById('cuento').value;
+      const originalidad = document.getElementById('resultadoOriginalidad').dataset.valor || '';
+
+      const nuevoCuento = {
+        nombre,
+        titulo,
+        cuento,
+        originalidad
+      };
+
+      let cuentos = JSON.parse(localStorage.getItem('cuentos')) || [];
+      cuentos.push(nuevoCuento);
+      localStorage.setItem('cuentos', JSON.stringify(cuentos));
+
+      mostrarCuento(nuevoCuento);
+      document.getElementById('formCuento').reset();
+      document.getElementById('resultadoOriginalidad').textContent = '';
+    }
+
+    document.getElementById('formCuento').addEventListener('submit', agregarCuento);
+
+    document.getElementById('formRegistro').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Registro exitoso. ¡Bienvenido a Kidstales!');
+    });
+
+    function filtrarCuentos() {
+      const filtro = document.getElementById('filtro').value.trim();
+      const cuentos = document.querySelectorAll('.cuento-item');
+      cuentos.forEach(cuento => {
+        const match = cuento.innerHTML.match(/Originalidad:\s*(\d+)%/);
+        const originalidad = match ? match[1] : '';
+        if (originalidad.includes(filtro)) {
+          cuento.style.display = '';
+        } else {
+          cuento.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
